@@ -702,6 +702,11 @@ class LcdMenu {
         paint();
     }
     /**
+     * To know weather the menu is shown or not
+     * @return `bool` - isMenuEnabled
+     */
+    bool isMenuEnabled() { return enableUpdate; }
+    /**
      * To know weather the menu is in edit mode or not
      * @return `bool` - isEditModeEnabled
      */
