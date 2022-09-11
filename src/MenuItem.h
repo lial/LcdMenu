@@ -93,11 +93,12 @@ class MenuItem {
     MenuItem(const char* text, String value, fptrStr callback, byte type)
         : text(text), callbackStr(callback), type(type), value(value) {}
     MenuItem(const char* text, const char* textOn, const char* textOff,
-             fptrInt callback, byte type)
+             fptrInt callback, byte type, boolean isOn)
         : text(text),
           textOn(textOn),
           textOff(textOff),
           callbackInt(callback),
+          isOn(isOn),
           type(type) {}
     MenuItem(const char* text, String* items, uint8_t itemCount,
              fptrInt callback, byte type)
@@ -156,6 +157,8 @@ class MenuItem {
      */
     String* getItems() { return items; }
 
+    //boolean getIsOn() { return isOn; }
+
     /**
      * ## Setters
      */
@@ -176,6 +179,7 @@ class MenuItem {
      */
     void setSubMenu(MenuItem* subMenu) { this->subMenu = subMenu; }
 
+    //void setIsOn(boolean isOn) { this->isOn = isOn; }
     /**
      * Operators
      */
@@ -302,15 +306,25 @@ class ItemToggle : public MenuItem {
      * @param callback reference to callback function
      */
     ItemToggle(const char* key, fptrInt callback)
-        : MenuItem(key, "ON", "OFF", callback, MENU_ITEM_TOGGLE) {}
+        : MenuItem(key, "ON", "OFF", callback, MENU_ITEM_TOGGLE, this->isOn) {}
+
+    /**
+     * @param key key of the item
+     * @param callback reference to callback function
+     * @param isOn initialisation value (by default is false, that is not convenient in some cases)
+     */
+    ItemToggle(const char* key, fptrInt callback, boolean isOn)
+        : MenuItem(key, "ON", "OFF", callback, MENU_ITEM_TOGGLE, isOn) {}
+    
     /**
      * @param key key of the item
      * @param textOn display text when ON
      * @param textOff display text when OFF
      * @param callback reference to callback function
+     * @param isOn initialisation value (by default is false, that is not convenient in some cases)
      */
-    ItemToggle(const char* key, char* textOn, char* textOff, fptrInt callback)
-        : MenuItem(key, textOn, textOff, callback, MENU_ITEM_TOGGLE) {}
+    ItemToggle(const char* key, char* textOn, char* textOff, fptrInt callback, boolean isOn)
+        : MenuItem(key, textOn, textOff, callback, MENU_ITEM_TOGGLE, isOn) {}
 };
 
 /**
